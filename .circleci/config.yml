@@ -47,10 +47,10 @@ jobs:
 
   build_dockerimage:
     docker:
-      - image: circleci/golang:1.15
-        auth:
-            username: $DOCKER_USER
-            password: $DOCKER_PASS
+        - image: circleci/golang:1.15
+          auth:
+              username: $DOCKER_USER
+              password: $DOCKER_PASS
     
     steps:
       - checkout
