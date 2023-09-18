@@ -57,28 +57,28 @@ jobs:
       - setup_remote_docker:
           version: 19.03.13
 
-    # Build Docker Image
-    - run:
-          name: Build Docker Image
-          command: |
-            TAG=capstone-project
-            docker build -t $TAG .
+      # Build Docker Image
+      - run:
+            name: Build Docker Image
+            command: |
+              TAG=capstone-project
+              docker build -t $TAG .
 
-    # List Docker Image
-    - run:
-          name: List Docker Image
-          command: |
-            docker image ls
+      # List Docker Image
+      - run:
+            name: List Docker Image
+            command: |
+              docker image ls
 
-    # Push Docker Image
-    - run:
-          name: Push Docker image into Docker Hub
-          command: |
-            echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
-            TAG=capstone-project
-            dockerpath=satishdockers/$TAG
-            docker tag $TAG $dockerpath
-            docker push $dockerpath
+      # Push Docker Image
+      - run:
+            name: Push Docker image into Docker Hub
+            command: |
+              echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
+              TAG=capstone-project
+              dockerpath=satishdockers/$TAG
+              docker tag $TAG $dockerpath
+              docker push $dockerpath
 
 
 
