@@ -86,7 +86,7 @@ workflows:
   default:
     jobs:
       - lint-dockerfile
-      - build_dockerimage
+      - build_dockerimage:
           requires: [lint-dockerfile]
 
     
