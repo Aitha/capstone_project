@@ -80,6 +80,65 @@ jobs:
               docker tag $TAG $dockerpath
               docker push $dockerpath
 
+  build_aws_kubernetes_cluster:
+    docker:
+      - image: ubuntu:18.04
+    working_directory: ~/repo
+
+    steps:
+      - checkout
+      
+      # install dependencies for the Kubernetes Cluster 
+      - run:
+          name: Install Dependencies for Kubernetes Cluster 
+          command: |
+            # updae and install sudo package 
+            apt-get -y -qq update
+            apt-get -y install sudo
+
+            # installs required packages
+            sudo apt-get -y install curl gnupg2 software-properties-common unzip less git dos2unix
+
+            # install AWS CLI 
+            curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+            unzip awscliv2.zip
+            sudo ./aws/install
+            
+            # Install kubectl
+            curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+            sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+            
+            # Install eksctl
+            curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
+            sudo mv /tmp/eksctl /usr/local/bin
+
+      # Setup AWS Kubernetes Cluster
+      - run:
+          name: Setup AWS Kubernetes Cluster
+          command: |
+            export TERM=xterm
+            aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
+            aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
+            aws configure set default.region $AWS_DEFAULT_REGION
+            pwd
+            nohup aws cloudformation list-exports > output.txt
+            cat output.txt 
+            chmod 755 setup_aws_kubernetes_cluster.sh
+            ./setup_aws_kubernetes_cluster.sh
+
+      # Update AWS Kubernetes Cluster using yaml for rolling deployment
+      - run:
+          name: Update AWS Kubernetes Cluster
+          command: |            
+             aws eks --region $AWS_DEFAULT_REGION update-kubeconfig --name udacity-devops-capstone-project
+             kubectl apply -f deploy_capstone_project.yml
+             kubectl get nodes
+             kubectl get deployment
+             kubectl get pod -o wide
+             kubectl apply -f kub_config.yml
+             kubectl get services
+             kubectl rollout restart deployment/udacity-devops-capstone-project
+             kubectl describe svc udacity-devops-capstone-project
 
 
 workflows:
@@ -88,5 +147,8 @@ workflows:
       - lint-dockerfile
       - build_dockerimage:
           requires: [lint-dockerfile]
+      - build_aws_kubernetes_cluster
+          requires: [build_dockerimage]
+
 
     
