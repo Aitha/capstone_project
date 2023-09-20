@@ -147,7 +147,7 @@ workflows:
       - lint-dockerfile
       - build_dockerimage:
           requires: [lint-dockerfile]
-      - build_aws_kubernetes_cluster
+      - build_aws_kubernetes_cluster:
           requires: [build_dockerimage]
 
 
