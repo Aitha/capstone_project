@@ -30,6 +30,7 @@ In this project I have created CICD Pipeline using Circle CI to do:
 ├── Makefile                        # Makefile having targets to automate tasks
 ├── README.md
 ├── setup_aws_kubernetes_cluster.sh # Setup AWS EKS Cluster
+```
 
 ## Pre-requisite
 - Create account GitHub
