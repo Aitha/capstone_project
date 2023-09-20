@@ -11,7 +11,7 @@ if [[ $count -gt 0 ]]
     echo "Creatiing AWS Kubernetes cluster"
     eksctl create cluster \
         --name udacity-devops-capstone-project \
-        --version 1.19 \
+        --version 1.23 \
         --region $AWS_DEFAULT_REGION \
         --nodegroup-name udacity-devops-capstone-project \
         --node-type t3.large \
