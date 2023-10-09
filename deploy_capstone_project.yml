@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
       - name: udacity-devops-capstone-project
-        image: satishdockers/capstone-project
+        image: aitha/capstone-project
         imagePullPolicy: Always
         ports:
         - containerPort: 80
