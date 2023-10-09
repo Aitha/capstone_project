@@ -76,7 +76,7 @@ jobs:
             command: |
               echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
               TAG=capstone-project
-              dockerpath=satishdockers/$TAG
+              dockerpath=aitha/$TAG
               docker tag $TAG $dockerpath
               docker push $dockerpath
 
