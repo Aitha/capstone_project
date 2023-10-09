@@ -49,6 +49,8 @@ jobs:
     docker:
         - image: circleci/golang:1.15
           auth:
+            DOCKER_PASS=Docker@1988
+            DOCKER_USER=aitha          
               username: $DOCKER_USER
               password: $DOCKER_PASS
     
