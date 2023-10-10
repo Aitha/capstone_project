@@ -107,7 +107,7 @@ jobs:
 workflows:
   default:
     jobs:
-      - build_aws_kubernetes_cluster:
+      - build_aws_kubernetes_cluster
 
 
 
