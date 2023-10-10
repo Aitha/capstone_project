@@ -140,12 +140,15 @@ jobs:
              kubectl rollout restart deployment/udacity-devops-capstone-project
              kubectl describe svc udacity-devops-capstone-project
              dep_output=$(kubectl get deployments)
+             echo "Deployment status...."
              echo "$dep_output"
              sleep 5
              pods_output=$(kubectl get pods)
+             echo "Pods runnins status...."
              echo "$pods_output"
              sleep 5
              ports_output=$(kubectl port-forward udacity-devops-capstone-project 8000:80)
+             echo "Port forwarding status...."
              echo "$ports_output"
   
 workflows:
