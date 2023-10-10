@@ -133,7 +133,7 @@ jobs:
              pods_output=$(kubectl get pods)
              echo "Pods runnins status...."
              echo "$pods_output"
-             sleep 5
+             sleep 120
              ports_output=$(kubectl port-forward udacity-devops-capstone-project 8000:80)
              echo "Port forwarding status...."
              echo "$ports_output"
