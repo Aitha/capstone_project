@@ -92,11 +92,6 @@ jobs:
       - run:
           name: Update AWS Kubernetes Cluster
           command: |
-            export TERM=xterm
-            aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
-            aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
-            aws configure set default.region $AWS_DEFAULT_REGION           
-            aws eks --region $AWS_DEFAULT_REGION update-kubeconfig --name udacity-devops-capstone-project
             dep_output=$(kubectl get deployments)
             echo "Deployment status...."
             echo "$dep_output"
@@ -112,11 +107,8 @@ jobs:
 workflows:
   default:
     jobs:
-      - lint-dockerfile
-      - build_dockerimage:
-          requires: [lint-dockerfile]
       - build_aws_kubernetes_cluster:
-          requires: [build_dockerimage]
+
 
 
       
