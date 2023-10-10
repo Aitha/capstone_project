@@ -137,11 +137,8 @@ jobs:
              echo "$pods_output"
              echo "$pods_output.NAME[0]"
              sleep 5
-             ports_output1=$(kubectl port-forward udacity-devops-capstone-project-567686b495-45524 8000:80)
-             ports_output=$(kubectl port-forward udacity-devops-capstone-project-6bfb7fdc86-6ll92 8000:80)
-             echo "Port forwarding status...."
-             echo "----------------------------"
-             echo "$ports_output"
+             POD_NAME=$(kubectl get pods -l app=udacity-devops-capstone-project -o jsonpath='{.items[0].metadata.name}')
+             kubectl port-forward $POD_NAME 8000:80
 
   
 workflows:
