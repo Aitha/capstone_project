@@ -128,14 +128,18 @@ jobs:
              kubectl describe svc udacity-devops-capstone-project
              dep_output=$(kubectl get deployments)
              echo "Deployment status...."
+             echo "----------------------------"
              echo "$dep_output"
              sleep 5
              pods_output=$(kubectl get pods)
              echo "Pods runnins status...."
+             echo "----------------------------"
              echo "$pods_output"
-             sleep 120
-             ports_output=$(kubectl port-forward udacity-devops-capstone-project-5568c6cb8-67jcp 8000:80)
+             echo "$pods_output.NAME[0]"
+             sleep 5
+             ports_output=$(kubectl port-forward udacity-devops-capstone-project-* 8000:80)
              echo "Port forwarding status...."
+             echo "----------------------------"
              echo "$ports_output"
   
 workflows:
