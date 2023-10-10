@@ -92,7 +92,6 @@ jobs:
       - run:
           name: Update AWS Kubernetes Cluster
           command: |            
-             aws eks --region $AWS_DEFAULT_REGION update-kubeconfig --name udacity-devops-capstone-project
              dep_output=$(kubectl get deployments)
              echo "Deployment status...."
              echo "$dep_output"
