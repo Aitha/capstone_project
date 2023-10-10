@@ -113,9 +113,23 @@ jobs:
             sudo mv /tmp/eksctl /usr/local/bin
 
       # Update AWS Kubernetes Cluster using yaml for rolling deployment
+      # Update AWS Kubernetes Cluster using yaml for rolling deployment
       - run:
           name: Update AWS Kubernetes Cluster
           command: |            
+             aws eks --region $AWS_DEFAULT_REGION update-kubeconfig --name udacity-devops-capstone-project
+             kubectl apply -f deploy_capstone_project.yml
+             kubectl get nodes
+             kubectl get deployment
+             kubectl get pod -o wide
+             kubectl apply -f kub_config.yml
+             kubectl get services
+             kubectl rollout restart deployment/udacity-devops-capstone-project
+             kubectl describe svc udacity-devops-capstone-project
+             dep_output=$(kubectl get deployments)
+             echo "Deployment status...."
+             echo "$dep_output"
+             sleep 5
              pods_output=$(kubectl get pods)
              echo "Pods runnins status...."
              echo "$pods_output"
