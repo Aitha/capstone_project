@@ -148,23 +148,6 @@ jobs:
              ports_output=$(kubectl port-forward udacity-devops-capstone-project 8000:80)
              echo "$ports_output"
   
-  get_pod:
-    steps:
-      - checkout
-      - setup_remote_docker:
-          version: 19.03.13
-      - run:
-          name: get pod
-          command: |  
-             dep_output=$(kubectl get deployments)
-             echo "$dep_output"
-             sleep 5
-             pods_output=$(kubectl get pods)
-             echo "$pods_output"
-             sleep 5
-             ports_output=$(kubectl port-forward udacity-devops-capstone-project 8000:80)
-             echo "$ports_output"
-
 workflows:
   default:
     jobs:
@@ -173,8 +156,7 @@ workflows:
           requires: [lint-dockerfile]
       - build_aws_kubernetes_cluster:
           requires: [build_dockerimage]
-      - get_pod:
-          requires: [build_dockerimage]
+
 
       
 
