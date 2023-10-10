@@ -112,10 +112,21 @@ jobs:
             curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
             sudo mv /tmp/eksctl /usr/local/bin
 
-      # Update AWS Kubernetes Cluster using yaml for rolling deployment
-      # Update AWS Kubernetes Cluster using yaml for rolling deployment
+      # Setup AWS Kubernetes Cluster
+      #- run:
+       #  name: Setup AWS Kubernetes Cluster
+        #  command: |
+          #  export TERM=xterm
+         #   aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
+          #  aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
+           # aws configure set default.region $AWS_DEFAULT_REGION
+          #  pwd
+          # nohup aws cloudformation list-exports > output.txt &
+           # cat output.txt 
+           # chmod 755 setup_aws_kubernetes_cluster.sh
+           # ./setup_aws_kubernetes_cluster.sh
       - run:
-          name: Update AWS Kubernetes Cluster
+          name: Deployment POD and port forward
           command: |            
              aws eks --region $AWS_DEFAULT_REGION update-kubeconfig --name udacity-devops-capstone-project
              kubectl apply -f deploy_capstone_project.yml
@@ -127,7 +138,7 @@ jobs:
              kubectl rollout restart deployment/udacity-devops-capstone-project
              kubectl describe svc udacity-devops-capstone-project
              dep_output=$(kubectl get deployments)
-             echo "Deployment status...."
+             echo "Deployment status........"
              echo "----------------------------"
              echo "$dep_output"
              sleep 5
@@ -135,9 +146,11 @@ jobs:
              echo "Pods runnins status...."
              echo "----------------------------"
              echo "$pods_output"
-             echo "$pods_output.NAME[0]"
              sleep 5
+             echo "----------------------------"
+             echo "Port forward output......"
              POD_NAME=$(kubectl get pods -l app=udacity-devops-capstone-project -o jsonpath='{.items[0].metadata.name}')
+             echo "$POD_NAME"
              kubectl port-forward $POD_NAME 8000:80
 
   
