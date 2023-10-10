@@ -121,7 +121,7 @@ jobs:
             aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
             aws configure set default.region $AWS_DEFAULT_REGION
             pwd
-            nohup aws cloudformation list-exports > output.txt
+            nohup aws cloudformation list-exports > output.txt &
             cat output.txt 
             chmod 755 setup_aws_kubernetes_cluster.sh
             ./setup_aws_kubernetes_cluster.sh
