@@ -111,22 +111,21 @@ jobs:
             # Install eksctl
             curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
             sudo mv /tmp/eksctl /usr/local/bin
-      
-      # Update AWS Kubernetes Cluster using yaml for rolling deployment....
+
+      # Update AWS Kubernetes Cluster using yaml for rolling deployment
       - run:
           name: Update AWS Kubernetes Cluster
-          command: |
-            dep_output=$(kubectl get deployments)
-            echo "Deployment status...."
-            echo "$dep_output"
-            sleep 5
-            pods_output=$(kubectl get pods)
-            echo "Pods runnins status...."
-            echo "$pods_output"
-            sleep 5
-            ports_output=$(kubectl port-forward udacity-devops-capstone-project 8000:80)
-            echo "Port forwarding status...."
-            echo "$ports_output"
+          command: |            
+             echo "Deployment status...."
+             echo "$dep_output"
+             sleep 5
+             pods_output=$(kubectl get pods)
+             echo "Pods runnins status...."
+             echo "$pods_output"
+             sleep 5
+             ports_output=$(kubectl port-forward udacity-devops-capstone-project 8000:80)
+             echo "Port forwarding status...."
+             echo "$ports_output"
   
 workflows:
   default:
