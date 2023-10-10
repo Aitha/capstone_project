@@ -91,18 +91,23 @@ jobs:
       # Update AWS Kubernetes Cluster using yaml for rolling deployment
       - run:
           name: Update AWS Kubernetes Cluster
-          command: |            
-             dep_output=$(kubectl get deployments)
-             echo "Deployment status...."
-             echo "$dep_output"
-             sleep 5
-             pods_output=$(kubectl get pods)
-             echo "Pods runnins status...."
-             echo "$pods_output"
-             sleep 5
-             ports_output=$(kubectl port-forward udacity-devops-capstone-project 8000:80)
-             echo "Port forwarding status...."
-             echo "$ports_output"
+          command: |
+            export TERM=xterm
+            aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
+            aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
+            aws configure set default.region $AWS_DEFAULT_REGION           
+            aws eks --region $AWS_DEFAULT_REGION update-kubeconfig --name udacity-devops-capstone-project
+            dep_output=$(kubectl get deployments)
+            echo "Deployment status...."
+            echo "$dep_output"
+            sleep 5
+            pods_output=$(kubectl get pods)
+            echo "Pods runnins status...."
+            echo "$pods_output"
+            sleep 5
+            ports_output=$(kubectl port-forward udacity-devops-capstone-project 8000:80)
+            echo "Port forwarding status...."
+            echo "$ports_output"
   
 workflows:
   default:
