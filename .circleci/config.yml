@@ -130,16 +130,40 @@ jobs:
       - run:
           name: Update AWS Kubernetes Cluster
           command: |            
-             aws eks --region $AWS_DEFAULT_REGION update-kubeconfig --name udacity-devops-capstone-project1
+             aws eks --region $AWS_DEFAULT_REGION update-kubeconfig --name udacity-devops-capstone-project
              kubectl apply -f deploy_capstone_project.yml
              kubectl get nodes
              kubectl get deployment
              kubectl get pod -o wide
              kubectl apply -f kub_config.yml
              kubectl get services
-             kubectl rollout restart deployment/udacity-devops-capstone-project1
-             kubectl describe svc udacity-devops-capstone-project1
-
+             kubectl rollout restart deployment/udacity-devops-capstone-project
+             kubectl describe svc udacity-devops-capstone-project
+             dep_output=$(kubectl get deployments)
+             echo "$dep_output"
+             sleep 5
+             pods_output=$(kubectl get pods)
+             echo "$pods_output"
+             sleep 5
+             ports_output=$(kubectl port-forward udacity-devops-capstone-project 8000:80)
+             echo "$ports_output"
+  
+  get_pod:
+    steps:
+      - checkout
+      - setup_remote_docker:
+          version: 19.03.13
+      - run:
+          name: get pod
+          command: |  
+             dep_output=$(kubectl get deployments)
+             echo "$dep_output"
+             sleep 5
+             pods_output=$(kubectl get pods)
+             echo "$pods_output"
+             sleep 5
+             ports_output=$(kubectl port-forward udacity-devops-capstone-project 8000:80)
+             echo "$ports_output"
 
 workflows:
   default:
@@ -149,6 +173,10 @@ workflows:
           requires: [lint-dockerfile]
       - build_aws_kubernetes_cluster:
           requires: [build_dockerimage]
+      - get_pod:
+          requires: [build_dockerimage]
+
+      
 
 
     

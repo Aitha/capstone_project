@@ -1,0 +1,5 @@
+Github link:
+https://github.com/Aitha/capstone_project/tree/main/.circleci
+
+Application URL:
+http://a2d4bf92c399b44c081ec64b54bb1adf-140608256.us-east-1.elb.amazonaws.com/
