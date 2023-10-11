@@ -42,6 +42,6 @@ I have created CICD Pipeline using Circle CI to do:
 
 ## Access the application
 - [CircleCI] https://app.circleci.com/pipelines/github/Aitha/capstone_project/13/workflows/cf36dae2-94d1-4a37-8305-da275297d7ae
-- [Application](http://a2d4bf92c399b44c081ec64b54bb1adf-140608256.us-east-1.elb.amazonaws.com/)
+- [Application](http://aed8a8d7efec44df7a70250116dc3ac9-1560115644.us-east-1.elb.amazonaws.com/)
 
 **Note:** All URL's will be available only during review time from Udacity.
